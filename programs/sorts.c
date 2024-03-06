@@ -144,6 +144,43 @@ void InsertionSort(int arr[], int n)
     PrintArray(arr,n); 
 }
 
+/* ------------------------------------------------------------------------------
+ Merge Sort:
+ Helper functions:
+    * int CheckCorrectIndex(int arr[], int current_index)
+    * void SwapElements(int arr[], int ind1, int ind2)
+    * void ShiftElements(int arr[], int n, int correct_index, int current_index)
+    * void PrintArray(int arr[], int n)
+---------------------------------------------------------------------------------*/
+void MergeSort(int arr[], int size)
+{
+    printf("Unsorted Array: ");
+    PrintArray(arr, size);
+
+    if (size == 1)
+        return;
+    if (size == 2)
+    {
+        if (arr[0] > arr[1])
+            SwapElements(arr, 0, 1);
+        PrintArray(arr, 2);
+        return;
+    }
+
+    int smaller_size = (size + 1) / 2;
+    MergeSort(arr, smaller_size);
+    MergeSort(arr + smaller_size, size - smaller_size);
+
+    for (int i = smaller_size; i < size; i++)
+    {
+        int correct_index = CheckCorrectIndex(arr, i);
+        ShiftElements(arr, i, correct_index, i);
+    }
+    
+    printf("Sorted Array: ");
+    PrintArray(arr,size); 
+}
+
 int main() //Do not change main
 {
     int arr1[]={6,4,6,7,3,9,1,10,5,0};
@@ -152,11 +189,10 @@ int main() //Do not change main
     int option;
     do
     {
-        printf("Enter 1 for Bubble Sort, 2 for Selection Sort and 3 for Insertion Sort\n");
+        printf("Enter:\n1 for Bubble Sort\n2 for Selection Sort\n3 for Insertion Sort\n4 for Merge Sort\n");
         scanf("%d", &option);
     }
-    while (option < 1 || option > 3);
-    
+    while (option < 1 || option > 4);
     
     switch (option)
     {
@@ -173,6 +209,11 @@ int main() //Do not change main
     case 3:
         InsertionSort(arr1,10);
         InsertionSort(arr2,10);
+        break;
+    
+    case 4:
+        MergeSort(arr1,10);
+        MergeSort(arr2,10);
         break;
     
     default:
